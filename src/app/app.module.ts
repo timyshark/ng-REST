@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -10,9 +12,25 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    HighlightModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: Window,
+      useValue: window,
+    },
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: {
+        coreLibraryLoader: () => import('highlight.js/lib/highlight'),
+        languages: {
+          json: () => import('highlight.js/lib/languages/json'),
+        },
+      },
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
